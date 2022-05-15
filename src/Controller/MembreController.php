@@ -15,7 +15,7 @@ class MembreController extends AbstractController
 
    
 
-    #[Route('/membre', name: 'app_membre')]
+    #[Route('/membre', name: 'membre')]
     public function index( MembreRepository $membreRepo ) : Response
     {
 
@@ -23,7 +23,7 @@ class MembreController extends AbstractController
 
         return $this->render('membre/index.html.twig', [
             'controller_name' => 'MembreController',
-            'membres' => $membres
+            'membres' => $membres,
         ]);
     }
 }

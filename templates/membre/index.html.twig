@@ -1,17 +1,37 @@
-</html><!DOCTYPE html>
+<!DOCTYPE html>
+
 <html>
+
+
+ <link rel="stylesheet" href="/membre.css">
+
 <header >
     <h1> Membre </h1>
 </header>
 
-<bbody>
-    <p> voici les membres de la JE</p>
-    {% for membre in membres %}
-    <membre> 
-        <p>{{membre.nom}} {{membre.prenom}} </p>
-    </membre>
+<body>
 
-    {% endfor %}
+    <p> voici les membres de la JE</p>
+
+    <table class="table" >
+         <tr>
+            <td>prénom</td>
+            <td>nom</td>
+            <td> status </td>
+            <td> pole </td>
+            <td> action </td>
+        </tr>
+        {% for membre in membres %}
+        <tr>
+            <td>{{membre.prenom}}</td>
+            <td>{{membre.nom}}</td>
+            <td> {% for status in membre.status %} {{status.status_name}} {% endfor %} </td>
+            <td>  {{membre.pole.pole_name}} </td>
+            <td><button>supprimer</button></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
 </body>
 
 </html>

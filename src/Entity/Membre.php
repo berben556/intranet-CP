@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MembreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MembreRepository::class)]
@@ -14,37 +16,29 @@ class Membre
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $nom;
-
-    #[ORM\Column(type: 'string', length: 255)]
     private $prenom;
 
-    #[ORM\ManyToOne(targetEntity: Status::class)]
-    #[ORM\JoinColumn(nullable: false)]
-    private $status_id;
+    #[ORM\Column(type: 'string', length: 255)]
+    private $nom;
 
     #[ORM\Column(type: 'integer')]
-    private $roles_id;
+    private $admin;
 
-    #[ORM\ManyToOne(targetEntity: Pole::class)]
+    #[ORM\ManyToMany(targetEntity: Status::class, inversedBy: 'membre_id')]
+    private $status;
+
+    #[ORM\ManyToOne(targetEntity: Pole::class, inversedBy: 'membre_id')]
     #[ORM\JoinColumn(nullable: false)]
-    private $pole_id;
+    private $pole;
+
+    public function __construct()
+    {
+        $this->status = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
     }
 
     public function getPrenom(): ?string
@@ -59,38 +53,62 @@ class Membre
         return $this;
     }
 
-    public function getStatusId(): ?Status
+    public function getNom(): ?string
     {
-        return $this->status_id;
+        return $this->nom;
     }
 
-    public function setStatusId(?Status $status_id): self
+    public function setNom(string $nom): self
     {
-        $this->status_id = $status_id;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getRolesId(): ?int
+    public function getAdmin(): ?int
     {
-        return $this->roles_id;
+        return $this->admin;
     }
 
-    public function setRolesId(int $roles_id): self
+    public function setAdmin(int $admin): self
     {
-        $this->roles_id = $roles_id;
+        $this->admin = $admin;
 
         return $this;
     }
 
-    public function getPoleId(): ?Pole
+    /**
+     * @return Collection<int, Status>
+     */
+    public function getStatus(): Collection
     {
-        return $this->pole_id;
+        return $this->status;
     }
 
-    public function setPoleId(?Pole $pole_id): self
+    public function addStatus(Status $status): self
     {
-        $this->pole_id = $pole_id;
+        if (!$this->status->contains($status)) {
+            $this->status[] = $status;
+        }
+
+        return $this;
+    }
+
+    public function removeStatus(Status $status): self
+    {
+        $this->status->removeElement($status);
+
+        return $this;
+    }
+
+    public function getPole(): ?Pole
+    {
+        return $this->pole;
+    }
+
+    public function setPole(?Pole $pole): self
+    {
+        $this->pole = $pole;
 
         return $this;
     }
