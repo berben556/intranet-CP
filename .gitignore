@@ -23,7 +23,6 @@ bin
 config
 migrations
 public
-templates
 translation
 .env
 .env.templates

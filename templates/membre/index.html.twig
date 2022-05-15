@@ -1,0 +1,17 @@
+</html><!DOCTYPE html>
+<html>
+<header >
+    <h1> Membre </h1>
+</header>
+
+<bbody>
+    <p> voici les membres de la JE</p>
+    {% for membre in membres %}
+    <membre> 
+        <p>{{membre.nom}} {{membre.prenom}} </p>
+    </membre>
+
+    {% endfor %}
+</body>
+
+</html>
