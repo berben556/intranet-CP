@@ -26,4 +26,15 @@ class MembreController extends AbstractController
             'membres' => $membres,
         ]);
     }
+
+    #[Route('/delete_membre/{id}', name: 'delete_membre')]
+    public function delete ( int $id, MembreRepository $membreRepo ) : Response
+    {
+        
+        $membre= $membreRepo->findOneById($id);
+        $membreRepo->remove($membre, true);
+
+
+        return $this->redirectToRoute("membre");
+    }
 }

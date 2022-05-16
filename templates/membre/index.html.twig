@@ -27,7 +27,7 @@
             <td>{{membre.nom}}</td>
             <td> {% for status in membre.status %} {{status.status_name}} {% endfor %} </td>
             <td>  {{membre.pole.pole_name}} </td>
-            <td><button>supprimer</button></td>
+            <td><a href="{{ path('delete_membre', {id: membre.id}) }}">supprimer</a></td>
         </tr>
         {% endfor %}
     </table>
